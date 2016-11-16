@@ -2,6 +2,7 @@
 #include <SoftwareSerial.h>
 #include "WiFi.h"
 #include "motors.h"
+#include "sensors.h"
 
 void setup() {
   /* For WiFi Module
