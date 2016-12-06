@@ -7,7 +7,9 @@ void connectESP8266();
 void displayConnectInfo();
 void clientDemo();
 void serverSetup();
-void serverDemo();
+void CheckForCommand();
 void serialTrigger(String message);
+
+extern int CommandValue;
 
 #endif

@@ -5,6 +5,6 @@
 
 // set up the pins for LCD
 extern LiquidCrystal lcd;
-
+extern bool flag3;
 
 #endif

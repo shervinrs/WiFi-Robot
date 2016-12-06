@@ -3,6 +3,10 @@
 #include "util/ESP8266_AT.h"
 #include <SoftwareSerial.h>
 #include "sensors.h"
+#include "motors.h"
+
+// global values
+extern int CommandValue = 0;
 
 //////////////////////////////
 // WiFi Network Definitions //
@@ -168,28 +172,26 @@ void serverSetup() {
   Serial.println();
 }
 
-void serverDemo() {
+void CheckForCommand() {
   //ESP8266Client client = server.available(50);
 
   //if (client) {
     if (esp8266.find("+IPD")) {
-      delay(50);
+      //delay(50);
+      lcd.setCursor(0, 2);
+      lcd.print("Here");
+
       if (esp8266.find("?")) {
         String msg;
         msg = esp8266.readStringUntil(' ');     // read the message
         String command = msg.substring(0, 3);
         String valueStr = msg.substring(4); // next 3 characters inform the desired angle
-        int value = valueStr.toInt(); // convert to integer
-        //Serial.println(value);
-        lcd.setCursor(0, 1);
-        lcd.print(value);
-
-        lcd.setCursor(0, 0);
-        lcd.print("Data Received");
-      }
+        CommandValue = valueStr.toInt(); // convert to integer
+        flag3 = true;
+  	   }
     }
     // give the web browser time to receive the data
-    delay(10);
+    //delay(10);
 
     // close the connection:
     //client.stop();
