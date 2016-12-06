@@ -3,20 +3,22 @@
 #include "WiFi.h"
 #include "motors.h"
 #include "sensors.h"
-#include "Timer.h"
+#include "TimerOne.h"
+
+#define COLLISION 0
+#define OPEN 1
 
 int count = 0;
-Timer t;
+int IR0 = 0;
+int IR1 = 0;
 
 void callback() {
-  count++;
-  lcd.setCursor(0, 3);
-  lcd.print(count);
-  CheckForCommand();
+  timer200 = true;
 }
 
 void setup() {
-  t.every(100, callback);
+  Timer1.initialize(300000);
+  Timer1.attachInterrupt(callback);
 
   // set up LCD size
   lcd.begin(20, 4);
@@ -35,37 +37,80 @@ void setup() {
 
   lcd.setCursor(0, 0);
   lcd.print("Initialized");
-
-  //Timer.attachInterrupt(callback);
 }
 
 void loop() {
-  t.update();
+  if (timer200) {
+    CheckForCommand();
 
-  if (flag3) {
+    if (!NewCommand) {
+      lcd.setCursor(0, 0);
+      lcd.print("Waiting for command ");
+      lcd.setCursor(0, 1);
+      lcd.print("Stop                ");
+      carStop();
+    }
+
+    if (IR0 == OPEN) {
+      lcd.setCursor(0, 3);
+      lcd.print("No Collision        ");
+    }
+    else {
+      lcd.setCursor(0, 3);
+      lcd.print("Collision           ");
+      NewCommand = false;
+      carStop();
+    }
+
+    if (IR1 == OPEN) {
+      lcd.setCursor(0, 2);
+      lcd.print("No Collision        ");
+    }
+    else {
+      lcd.setCursor(0, 2);
+      lcd.print("Collision           ");
+      NewCommand = false;
+      carStop();
+    }
+
+    timer200 = false;
+  }
+
+  if (NewCommand) {
+    count++;
+    lcd.setCursor(0, 3);
+    lcd.print(count);
+
     lcd.setCursor(0, 1);
     lcd.print(CommandValue);
 
     lcd.setCursor(0, 0);
-    lcd.print("Data Received");
+    lcd.print("Data Received       ");
 
     lcd.setCursor(0, 1);
 
     switch (CommandValue) {
     case FORWARD:
-      lcd.print("Forward ");
+      lcd.print("Forward             ");
       break;
     case BACKWARD:
-      lcd.print("Backward");
+      lcd.print("Backward            ");
+      carBack(100,100);
       break;
     case LEFT:
-      lcd.print("Left    ");
+      lcd.print("Left                ");
       break;
     case RIGHT:
-      lcd.print("Right   ");
+      lcd.print("Right               ");
       break;
-
-      flag3 = false;
     }
+
+    NewCommand = false;
   }
+
+
+IR0 = digitalRead(38);
+IR1  = digitalRead(13);
+
+
 }

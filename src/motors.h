@@ -5,6 +5,7 @@
 #define BACKWARD 4
 #define LEFT 2
 #define RIGHT 3
+#define STOP 0
 
 void carStop();
 void carBack(int leftSpeed,int rightSpeed);

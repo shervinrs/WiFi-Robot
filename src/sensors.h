@@ -5,6 +5,7 @@
 
 // set up the pins for LCD
 extern LiquidCrystal lcd;
-extern bool flag3;
+extern bool timer200;
+extern bool NewCommand;
 
 #endif

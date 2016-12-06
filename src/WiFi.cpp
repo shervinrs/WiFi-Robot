@@ -178,23 +178,13 @@ void CheckForCommand() {
   //if (client) {
     if (esp8266.find("+IPD")) {
       //delay(50);
-      lcd.setCursor(0, 2);
-      lcd.print("Here");
-
       if (esp8266.find("?")) {
         String msg;
         msg = esp8266.readStringUntil(' ');     // read the message
         String command = msg.substring(0, 3);
         String valueStr = msg.substring(4); // next 3 characters inform the desired angle
         CommandValue = valueStr.toInt(); // convert to integer
-        flag3 = true;
+        NewCommand = true;
   	   }
     }
-    // give the web browser time to receive the data
-    //delay(10);
-
-    // close the connection:
-    //client.stop();
-    //Serial.println(F("Client disconnected"));
-  //}
 }
