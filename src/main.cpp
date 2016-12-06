@@ -58,8 +58,10 @@ void loop() {
     else {
       lcd.setCursor(0, 3);
       lcd.print("Collision           ");
-      NewCommand = false;
-      carStop();
+      if (CommandValue == BACKWARD) {
+        NewCommand = false;
+        carStop();
+      }
     }
 
     if (IR1 == OPEN) {
@@ -69,8 +71,10 @@ void loop() {
     else {
       lcd.setCursor(0, 2);
       lcd.print("Collision           ");
-      NewCommand = false;
-      carStop();
+      if (CommandValue == FORWARD) {
+        NewCommand = false;
+        carStop();
+      }
     }
 
     timer200 = false;
@@ -92,6 +96,7 @@ void loop() {
     switch (CommandValue) {
     case FORWARD:
       lcd.print("Forward             ");
+      carAdvance(100,100);
       break;
     case BACKWARD:
       lcd.print("Backward            ");
@@ -99,9 +104,11 @@ void loop() {
       break;
     case LEFT:
       lcd.print("Left                ");
+      carTurnLeft(100,100);
       break;
     case RIGHT:
       lcd.print("Right               ");
+      carTurnRight(100,100);
       break;
     }
 
