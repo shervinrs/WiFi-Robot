@@ -176,12 +176,20 @@ public:
 	int read();
 	int peek();
 	void flush();
+	bool find(char *target);
+	String readStringUntil(char terminator);
 
 	friend class ESP8266Client;
 	friend class ESP8266Server;
 
-    int16_t _state[ESP8266_MAX_SOCK_NUM];
+  int16_t _state[ESP8266_MAX_SOCK_NUM];
 
+	// Added commands
+	int16_t setAP();
+	int16_t setSoftAPIP();
+	///////////////////////////////////
+	// Others //
+	///////////////////////////////////
 protected:
     Stream* _serial;
 	unsigned long _baud;
@@ -190,10 +198,9 @@ private:
 	//////////////////////////
 	// Command Send/Receive //
 	//////////////////////////
-	void sendCommand(const char * cmd, enum esp8266_command_type type = ESP8266_CMD_EXECUTE, const char * params = NULL);
 	int16_t readForResponse(const char * rsp, unsigned int timeout);
 	int16_t readForResponses(const char * pass, const char * fail, unsigned int timeout);
-
+	void sendCommand(const char * cmd, enum esp8266_command_type type = ESP8266_CMD_EXECUTE, const char * params = NULL);
 	//////////////////
 	// Buffer Stuff //
 	//////////////////

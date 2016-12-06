@@ -30,7 +30,9 @@ ESP8266Server::ESP8266Server(uint16_t port)
 
 void ESP8266Server::begin()
 {
-	esp8266.configureTCPServer(_port, 1);
+	int retVal = esp8266.configureTCPServer(_port, 1);
+  if (retVal < 0)
+    Serial.println(F("Server could not be configured"));
 }
 
 ESP8266Client ESP8266Server::available(uint8_t wait)
@@ -52,16 +54,16 @@ ESP8266Client ESP8266Server::available(uint8_t wait)
 			      (esp8266._status.ipstatus[sock].tetype == ESP8266_SERVER))
 			{
 				ESP8266Client client(sock);
-				
+
 				return client;
 			}
 		}
 	}
-	
+
 	return ESP8266Client(255);
 }
 
-uint8_t ESP8266Server::status() 
+uint8_t ESP8266Server::status()
 {
 	return esp8266.status();
 }
@@ -73,7 +75,7 @@ size_t ESP8266Server::write(uint8_t b)
 }
 
 size_t ESP8266Server::write(const uint8_t *buffer, size_t size)
-{	
+{
 
 	size_t n = 0;
 /*
@@ -85,7 +87,7 @@ size_t ESP8266Server::write(const uint8_t *buffer, size_t size)
 
             if (WiFiClass::_server_port[sock] == _port &&
                 client.status() == ESTABLISHED)
-            {                
+            {
                 return esp8266.tcpSend(sock, buf, size);
             }
         }

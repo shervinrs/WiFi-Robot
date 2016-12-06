@@ -4,29 +4,41 @@
 #include "motors.h"
 #include "sensors.h"
 
+
+
 void setup() {
-  /* For WiFi Module
+  // set up LCD size
+  lcd.begin(20, 4);
+
   Serial.begin(9600);
+
+  //serialTrigger(F("Press any key to begin."));
+
   initializeESP8266();
   connectESP8266();
   displayConnectInfo();
 
-  serialTrigger(F("Press any key to connect client."));
-  clientDemo();
+  //serialTrigger(F("Press any key to connect client."));
+  //clientDemo();
 
-  serialTrigger(F("Press any key to test server."));
   serverSetup();
-*/
+
+  lcd.setCursor(0, 1);
+  lcd.print("Second Line");
+
+  lcd.setCursor(14, 1);
+  lcd.print("30");
+
+  lcd.setCursor(10, 3);
+  lcd.print("Fourth Line");
+
+  lcd.setCursor(0, 0);
+  lcd.print("Mew, world!");
+
 }
 
 void loop() {
-  //serverDemo(); // For WiFi Module
-  carAdvance(100,100);
-  delay(1000);
-  carBack(100,100);
-  delay(1000);
-  carTurnLeft(250,250);
-  delay(1000);
-  carTurnRight(250,250);
-  delay(1000);
+  serverDemo();
+
+
 }

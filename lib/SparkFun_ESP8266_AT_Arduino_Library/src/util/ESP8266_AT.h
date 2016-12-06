@@ -45,14 +45,14 @@ const char ESP8266_WIFI_MODE[] = "+CWMODE"; // WiFi mode (sta/AP/sta+AP)
 const char ESP8266_CONNECT_AP[] = "+CWJAP"; // Connect to AP
 //!const char ESP8266_LIST_AP[] = "+CWLAP"; // List available AP's
 const char ESP8266_DISCONNECT[] = "+CWQAP"; // Disconnect from AP
-//!const char ESP8266_AP_CONFIG[] = "+CWSAP"; // Set softAP configuration
+const char ESP8266_AP_CONFIG[] = "+CWSAP_CUR"; // Set softAP configuration
 //!const char ESP8266_STATION_IP[] = "+CWLIF"; // List station IP's connected to softAP
 //!const char ESP8266_DHCP_EN[] = "+CWDHCP"; // Enable/disable DHCP
 //!const char ESP8266_AUTO_CONNECT[] = "+CWAUTOCONN"; // Connect to AP automatically
 //!const char ESP8266_SET_STA_MAC[] = "+CIPSTAMAC"; // Set MAC address of station
 const char ESP8266_GET_STA_MAC[] = "+CIPSTAMAC"; // Get MAC address of station
 //!const char ESP8266_SET_AP_MAC[] = "+CIPAPMAC"; // Set MAC address of softAP
-//!const char ESP8266_SET_STA_IP[] = "+CIPSTA"; // Set IP address of ESP8266 station
+const char ESP8266_SET_STA_IP[] = "+CIPSTA"; // Set IP address of ESP8266 station
 //!const char ESP8266_SET_AP_IP[] = "+CIPAP"; // Set IP address of ESP8266 softAP
 
 /////////////////////
@@ -63,6 +63,7 @@ const char ESP8266_TCP_CONNECT[] = "+CIPSTART"; // Establish TCP connection or r
 const char ESP8266_TCP_SEND[] = "+CIPSEND"; // Send Data
 const char ESP8266_TCP_CLOSE[] = "+CIPCLOSE"; // Close TCP/UDP connection
 const char ESP8266_GET_LOCAL_IP[] = "+CIFSR"; // Get local IP address
+const char ESP8266_GET_LOCAL_IP_SOFTAP[] = "+CIPAP"; // Get local IP address of softAP
 const char ESP8266_TCP_MULTIPLE[] = "+CIPMUX"; // Set multiple connections mode
 const char ESP8266_SERVER_CONFIG[] = "+CIPSERVER"; // Configure as server
 const char ESP8266_TRANSMISSION_MODE[] = "+CIPMODE"; // Set transmission mode
