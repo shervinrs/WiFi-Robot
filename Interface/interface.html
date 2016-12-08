@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="author" content="Igor Fonseca Albuquerque">
+	<title>HAL9000</title>
+	<script src="jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+
+	<script>
+		$.ajaxSetup({
+			timeout: 1000
+		});
+
+		function mouseUpSr1(e) {
+
+			ArduinoVar = "http://192.168.1.1:80";
+			$.get(ArduinoVar, {
+				"com": e
+			}); {
+				Connection: close
+			};
+		}
+
+		function mouseUpSr2(angle) {
+			TextVar = myform2.inputbox.value;
+			ArduinoVar = "http://" + TextVar + ":80";
+			$.get(ArduinoVar, {
+				"sr2": angle
+			}); {
+				Connection: close
+			};
+		}
+
+		document.onkeydown = checkKey;
+
+		function checkKey(e) {
+			e = e || window.event;
+			if (e.keyCode == '38') {
+				mouseUpSr1(1); // up
+			} else if (e.keyCode == '40') {
+				mouseUpSr1(4); // down
+			} else if (e.keyCode == '37') {
+				mouseUpSr1(2); // left
+			} else if (e.keyCode == '39') {
+				mouseUpSr1(3); // right
+			}
+		}
+
+	</script>
+</head>
+
+
+<body>
+	<div class='container'>
+		<h1>Robot</h1>
+		<div class='row'>
+			<div class="col-md-5"></div>
+			<div class="col-md-2">
+				<button id='forward' onmouseup="mouseUpSr1(1)" class='btn btn-primary btn-block' type="button">Forward</button>
+			</div>
+			<div class="col-md-5"></div>
+		</div>
+
+		<div class='row'>
+			<div class="col-md-4"></div>
+			<div class="col-md-2">
+				<button id='left' onmouseup="mouseUpSr1(2)" class='btn btn-primary btn-block' type="button">Left</button>
+			</div>
+			<div class="col-md-2">
+				<button id='right' onmouseup="mouseUpSr1(3)" class='btn btn-primary btn-block' type="button">Right</button>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+
+		<div class='row'>
+			<div class="col-md-5"></div>
+			<div class="col-md-2">
+				<button id='backward' onmouseup="mouseUpSr1(4)" class='btn btn-primary btn-block' type="button">Backward</button>
+			</div>
+			<div class="col-md-5"></div>
+		</div>
+	</div>
+</body>
+
+</html>
