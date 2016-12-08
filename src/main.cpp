@@ -2,36 +2,26 @@
 #include <SoftwareSerial.h>
 #include "WiFi.h"
 #include "motors.h"
-#include "sensors.h"
+#include "peripherals.h"
 #include "TimerOne.h"
 
-#define COLLISION 0
-#define OPEN 1
-
-int count = 0;
-int IR0 = 0;
-int IR1 = 0;
+bool timer300 = false;
 
 void callback() {
-  timer200 = true;
+  timer300 = true; // will do its related operation in main loop
 }
 
 void setup() {
-  Timer1.initialize(300000);
+  Timer1.initialize(300000); // 300ms
   Timer1.attachInterrupt(callback);
 
   // set up LCD size
   lcd.begin(20, 4);
   Serial.begin(9600);
 
-  // serialTrigger(F("Press any key to begin."));
-
   initializeESP8266();
   connectESP8266();
   displayConnectInfo();
-
-  // serialTrigger(F("Press any key to connect client."));
-  // clientDemo();
 
   serverSetup();
 
@@ -40,7 +30,7 @@ void setup() {
 }
 
 void loop() {
-  if (timer200) {
+  if (timer300) {
     CheckForCommand();
 
     if (!NewCommand) {
@@ -51,48 +41,44 @@ void loop() {
       carStop();
     }
 
-    if (IR0 == OPEN) {
+    if (BackIR == OPEN) {
       lcd.setCursor(0, 3);
       lcd.print("No Collision        ");
     }
     else {
       lcd.setCursor(0, 3);
       lcd.print("Collision           ");
-      if (CommandValue == BACKWARD) {
-        NewCommand = false;
-        carStop();
-      }
     }
 
-    if (IR1 == OPEN) {
+    if (FrontIR == OPEN) {
       lcd.setCursor(0, 2);
       lcd.print("No Collision        ");
     }
     else {
       lcd.setCursor(0, 2);
       lcd.print("Collision           ");
-      if (CommandValue == FORWARD) {
-        NewCommand = false;
-        carStop();
-      }
     }
+    timer300 = false;
+  }
 
-    timer200 = false;
+  BackIR = BackCollision();
+  FrontIR  = FrontCollision();
+
+  if (BackIR == COLLISION && CommandValue == BACKWARD) {
+    NewCommand = false;
+    carStop();
+  }
+
+  if (FrontIR == COLLISION && CommandValue == FORWARD) {
+    NewCommand = false;
+    carStop();
   }
 
   if (NewCommand) {
-    count++;
-    lcd.setCursor(0, 3);
-    lcd.print(count);
-
-    lcd.setCursor(0, 1);
-    lcd.print(CommandValue);
-
     lcd.setCursor(0, 0);
     lcd.print("Data Received       ");
 
     lcd.setCursor(0, 1);
-
     switch (CommandValue) {
     case FORWARD:
       lcd.print("Forward             ");
@@ -111,13 +97,6 @@ void loop() {
       carTurnRight(100,100);
       break;
     }
-
     NewCommand = false;
   }
-
-
-IR0 = digitalRead(38);
-IR1  = digitalRead(13);
-
-
 }

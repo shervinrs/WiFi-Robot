@@ -5,7 +5,6 @@ void errorLoop(int error);
 void initializeESP8266();
 void connectESP8266();
 void displayConnectInfo();
-void clientDemo();
 void serverSetup();
 void CheckForCommand();
 void serialTrigger(String message);
