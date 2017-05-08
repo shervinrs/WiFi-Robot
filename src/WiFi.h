@@ -10,5 +10,6 @@ void CheckForCommand();
 void serialTrigger(String message);
 
 extern int CommandValue;
+extern bool NewCommand;
 
 #endif

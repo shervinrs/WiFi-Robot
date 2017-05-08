@@ -1,11 +1,12 @@
 #include "SparkFunESP8266WiFi.h"
 #include "WiFi.h"
 #include "motors.h"
-#include "peripherals.h"
+//#include "peripherals.h"
 #include "util/ESP8266_AT.h"
 #include <SoftwareSerial.h>
 
 extern int CommandValue = 0;
+extern bool NewCommand = false;
 
 ESP8266Server server = ESP8266Server(80);
 

@@ -32,20 +32,20 @@ unsigned int DistanceMeasured = 0;
    pinMode(URECHO, INPUT);                    // Sending Enable PWM mode command
 }
 
-void PWM_Mode()                              // a low pull on pin COMP/TRIG  triggering a sensor reading
-{
-  int sensorValue = 0;
+unsigned int PWM_Mode()  {                    // a low pull on pin COMP/TRIG  triggering a sensor reading
   //Serial.print("Distance Measured=");
   digitalWrite(URTRIG, LOW);
-  digitalWrite(URTRIG, HIGH);               // reading Pin PWM will output pulses
+  digitalWrite(URTRIG, HIGH);                 // reading Pin PWM will output pulses
   unsigned long LowLevelTime = pulseIn(URECHO, LOW) ;
-  if(LowLevelTime>=45000)                 // the reading is invalid.
-  {
+  if(LowLevelTime>=45000)  {                   // the reading is invalid.
     //Serial.print("Invalid");
+    DistanceMeasured = 0;
   }
   else  {
-    DistanceMeasured = LowLevelTime /50;   // every 50us low level stands for 1cm
+    DistanceMeasured = LowLevelTime /50;      // every 50us low level stands for 1cm
     //Serial.print(DistanceMeasured);
     //Serial.println("cm");
   }
+
+  return DistanceMeasured;
 }
