@@ -1,12 +1,14 @@
 #ifndef _MOTORS_H
 #define _MOTORS_H
 
+// movement definitions
 #define FORWARD 1
 #define BACKWARD 4
 #define LEFT 2
 #define RIGHT 3
 #define STOP 0
 
+// movement functions
 void carStop();
 void carBack(int leftSpeed,int rightSpeed);
 void carAdvance(int leftSpeed,int rightSpeed);
